@@ -6,6 +6,8 @@ import 'package:lifepet_app/services/pet_service.dart';
 import 'package:lifepet_app/services/remedio_service.dart';
 import 'package:lifepet_app/screens/pet/components/custom_navbar.dart';
 
+import 'components/remedio_card.dart';
+
 class RemedioScreen extends StatelessWidget {
   final String id;
   List<Remedio> remedioList = List();
@@ -69,7 +71,7 @@ class RemedioScreen extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 itemCount: remedioList.length,
                 itemBuilder: (context, index) {
-                  return _remedioCard(context, index);
+                  return remedioCard(context, index, remedioList);
                 },
               ),
             ),
@@ -88,34 +90,6 @@ class RemedioScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: CustomNavbar(paginaAberta: 1, pet: pet,),
-    );
-  }
-
-  Widget _remedioCard(BuildContext context, int index) {
-    return Card(
-      elevation: 8.0,
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      child: Container(
-        child: ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          leading: Container(
-            padding: EdgeInsets.only(right: 12),
-            decoration: BoxDecoration(
-              border: Border(
-                  right: BorderSide(width: 1.0, color: Colors.redAccent)
-              ),
-            ),
-            child: Icon(Icons.healing, color: Colors.redAccent,),
-          ),
-          title: Text(
-            remedioList[index].nome,
-            style: TextStyle(fontWeight: FontWeight.w400),
-          ),
-          subtitle: Text(
-            remedioList[index].data,
-          ),
-        ),
-      ),
     );
   }
 
