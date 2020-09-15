@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lifepet_app/models/pet_model.dart';
-import 'package:lifepet_app/screens/form_pet_screen.dart';
+import 'package:lifepet_app/screens/pet/form_pet_screen.dart';
 import 'package:lifepet_app/services/pet_service.dart';
-import 'package:lifepet_app/widgets/custom_navbar.dart';
+import 'package:lifepet_app/screens/pet/components/custom_navbar.dart';
 
 class PerfilPetScreen extends StatelessWidget {
 
