@@ -151,7 +151,7 @@ class PerfilPetScreen extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (_) => FormPetScreen(id: pet.id),
+              builder: (_) => FormPetScreen(id: pet.id.toString()),
             ),
           );
         },

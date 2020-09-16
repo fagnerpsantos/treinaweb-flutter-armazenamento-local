@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:lifepet_app/models/remedio_model.dart';
 import 'package:lifepet_app/services/pet_service.dart';
+import 'package:lifepet_app/utils/db_util.dart';
+
 
 class RemedioService{
-  final List<Remedio> _remedioList = [];
+  List<Remedio> _remedioList = [];
   final PetService petService = PetService();
 
   static final RemedioService _singleton = RemedioService._internal();
@@ -20,24 +22,6 @@ class RemedioService{
       id: "123",
       pet: petService.getPet("1")
     ));
-    _remedioList.add(Remedio(
-        nome: "Remédio X",
-        data: "10/10/2020",
-        id: "231",
-        pet: petService.getPet("2")
-    ));
-    _remedioList.add(Remedio(
-        nome: "Remédio X",
-        data: "10/10/2020",
-        id: "11",
-        pet: petService.getPet("2")
-    ));
-    _remedioList.add(Remedio(
-        nome: "Remédio X",
-        data: "10/10/2020",
-        id: "22",
-        pet: petService.getPet("2")
-    ));
   }
 
   List getRemediosPet(String id) {
@@ -46,12 +30,25 @@ class RemedioService{
     }).toList();
   }
 
+  Future<List> getAllRemedios() async {
+    final dataList = await DbUtil.getData('remedios');
+    _remedioList = dataList.map((remedios) => Remedio(
+        id: remedios['id'],
+        nome: remedios['nome'],
+        data: remedios['data'],
+        pet: remedios['pet'],
+    )).toList();
+    print(_remedioList[4].pet);
+    return _remedioList;
+  }
+
   void addRemedio(Remedio remedio) {
-    _remedioList.add(Remedio(
+    final newRemedio = Remedio(
       nome: remedio.nome,
       data: remedio.data,
-      id: Random().nextInt(100).toString(),
       pet: remedio.pet
-    ));
+    );
+    DbUtil.inserir('remedios', newRemedio.toMap());
+
   }
 }

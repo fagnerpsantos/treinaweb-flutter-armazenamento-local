@@ -6,7 +6,7 @@ class Pet {
   String sexo;
   String cor;
   String bio;
-  String id;
+  int id;
 
   Pet({
     this.nome,

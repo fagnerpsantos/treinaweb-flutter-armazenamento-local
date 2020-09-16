@@ -13,26 +13,26 @@ class PetService {
   }
 
   PetService._internal() {
-    _petList.add(Pet(
-        nome: "Totó",
-        imageUrl: 'assets/images/toto.png',
-        descricao: "Um cachorro esperto",
-        idade: 2,
-        sexo: "Macho",
-        cor: "Preto",
-        bio: "Sou um totó bem esperto",
-        id: "1"
-    ));
-    _petList.add(Pet(
-        nome: "Arnaldo",
-        imageUrl: 'assets/images/arnaldo.png',
-        descricao: "Um pinsher elétrico",
-        idade: 3,
-        sexo: "Macho",
-        cor: "Preto",
-        bio: "Sou um pinsher elétrico",
-        id: "2"
-    ));
+//    _petList.add(Pet(
+//        nome: "Totó",
+//        imageUrl: 'assets/images/toto.png',
+//        descricao: "Um cachorro esperto",
+//        idade: 2,
+//        sexo: "Macho",
+//        cor: "Preto",
+//        bio: "Sou um totó bem esperto",
+//        id: "1"
+//    ));
+//    _petList.add(Pet(
+//        nome: "Arnaldo",
+//        imageUrl: 'assets/images/arnaldo.png',
+//        descricao: "Um pinsher elétrico",
+//        idade: 3,
+//        sexo: "Macho",
+//        cor: "Preto",
+//        bio: "Sou um pinsher elétrico",
+//        id: "2"
+//    ));
   }
 
   Future<List> getAllPets() async {
@@ -58,7 +58,6 @@ class PetService {
       sexo: pet.sexo,
       descricao: pet.descricao,
       cor: pet.cor,
-      id: Random().nextInt(100).toString(),
       imageUrl: 'assets/images/toto.png',
     );
     DbUtil.inserir('pets', newPet.toMap());
@@ -77,7 +76,7 @@ class PetService {
 
   Pet getPet(String id) {
     return _petList.singleWhere((pet) {
-      return pet.id == id;
+      return pet.id.toString() == id;
     });
   }
 }

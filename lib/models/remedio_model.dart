@@ -12,4 +12,11 @@ class Remedio {
     this.id,
     this.pet
 });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nome': nome,
+    };
+  }
 }
