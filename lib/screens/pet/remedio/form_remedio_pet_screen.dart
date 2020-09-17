@@ -51,7 +51,7 @@ class FormRemedioPetScreen extends StatelessWidget {
                         Remedio novoRemedio = Remedio(
                           nome: _nomeController.text,
                           data: _dataController.text,
-                          pet: pet
+                          pet: pet.id
                         );
                         remedioService.addRemedio(novoRemedio);
                         Navigator.of(context).pushReplacement(
@@ -76,6 +76,6 @@ class FormRemedioPetScreen extends StatelessWidget {
   }
 
   void _getPet(String id) {
-    pet = petService.getPet(id);
+//    pet = petService.getPet(id);
   }
 }

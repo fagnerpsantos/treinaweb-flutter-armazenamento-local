@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => PerfilPetScreen(
-              id: pets[index].id.toString(),
+              id: pets[index].id,
             ),
           ),
         );

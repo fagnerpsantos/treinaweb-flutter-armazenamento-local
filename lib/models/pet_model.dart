@@ -19,6 +19,7 @@ class Pet {
     this.id
   });
 
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -30,6 +31,17 @@ class Pet {
       'cor': cor,
       'bio': bio,
     };
+  }
+
+  Pet.fromMap(Map map){
+    id = map["id"];
+    nome = map["nome"];
+    idade = map["idade"];
+    imageUrl = map["imageUrl"];
+    descricao = map["descricao"];
+    sexo = map["sexo"];
+    cor = map["cor"];
+    bio = map["bio"];
   }
 
 }

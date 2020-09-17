@@ -120,7 +120,7 @@ class _FormPetScreenState extends State<FormPetScreen> {
                           cor: corPet
                         );
                         if (pet != null) {
-                          service.editPet(pet.id.toString(), newPet);
+//                          service.editPet(pet.id.toString(), newPet);
                         } else {
                           service.addPet(newPet);
                         }
@@ -147,6 +147,6 @@ class _FormPetScreenState extends State<FormPetScreen> {
   }
 
   void _getPet(String id) {
-    pet = petService.getPet(id);
+//    pet = petService.getPet(id);
   }
 }

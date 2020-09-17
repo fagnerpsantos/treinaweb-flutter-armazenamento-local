@@ -17,7 +17,7 @@ class RemedioScreen extends StatelessWidget {
 
   RemedioScreen({this.id}){
    _getPet(id);
-//   _getRemedio(id);
+   _getRemedio(id);
   }
 
   @override
@@ -94,8 +94,8 @@ class RemedioScreen extends StatelessWidget {
   }
 
   void _getPet(String id) {
-    pet = petService.getPet(id);
-//    remedioService.getAllRemedios();
+//    pet = petService.getPet(id);
+    remedioService.getAllRemedios();
   }
 
   void _getRemedio(String id) {

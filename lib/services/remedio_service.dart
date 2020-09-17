@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:lifepet_app/models/remedio_model.dart';
 import 'package:lifepet_app/services/pet_service.dart';
 import 'package:lifepet_app/utils/db_util.dart';
@@ -20,25 +18,26 @@ class RemedioService{
       nome: "Remédio X",
       data: "10/10/2020",
       id: "123",
-      pet: petService.getPet("1")
+//      pet: petService.getPet("1").id
     ));
   }
 
   List getRemediosPet(String id) {
     return _remedioList.where((remedio) {
-      return remedio.pet.id == id;
+      return remedio.pet == id;
     }).toList();
   }
 
   Future<List> getAllRemedios() async {
     final dataList = await DbUtil.getData('remedios');
+//    print(dataList);
     _remedioList = dataList.map((remedios) => Remedio(
-        id: remedios['id'],
+        id: remedios['id'].toString(),
         nome: remedios['nome'],
         data: remedios['data'],
         pet: remedios['pet'],
     )).toList();
-    print(_remedioList[4].pet);
+    print(_remedioList[0].toMap());
     return _remedioList;
   }
 
