@@ -29,130 +29,130 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
+    return FutureBuilder(
         future: _loadPet,
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if (snapshot.hasData) {
             pet = snapshot.data;
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      Hero(
-                        tag: pet.id,
-                        child: Container(
-                          width: double.infinity,
-                          height: 350,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      pet.imageUrl
-                                  ),
-                                  fit: BoxFit.cover
-                              )
+            return Scaffold(
+              body: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        Hero(
+                          tag: pet.id,
+                          child: Container(
+                            width: double.infinity,
+                            height: 350,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        pet.imageUrl
+                                    ),
+                                    fit: BoxFit.cover
+                                )
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 40, left: 10),
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: Icon(Icons.arrow_back_ios),
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20,),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          pet.nome,
-                          style: TextStyle(
-                              fontFamily: "Montserrat",
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold
+                        Padding(
+                          padding: EdgeInsets.only(top: 40, left: 10),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            icon: Icon(Icons.arrow_back_ios),
+                            color: Colors.white,
                           ),
                         )
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          pet.descricao,
-                          style: TextStyle(
-                              fontFamily: "Montserrat",
-                              fontSize: 16,
-                              color: Colors.grey
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 30),
-                    height: 120,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        _cartaoInfoPet('Idade', pet.idade.toString()),
-                        _cartaoInfoPet('Sexo', pet.sexo.toString()),
-                        _cartaoInfoPet('Cor', pet.cor.toString()),
-                        _cartaoInfoPet('ID', pet.id.toString()),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
-                    child: Text(
-                      pet.bio,
-                      style: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontSize: 16,
-                          height: 1.5
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            pet.nome,
+                            style: TextStyle(
+                                fontFamily: "Montserrat",
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ],
                       ),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            pet.descricao,
+                            style: TextStyle(
+                                fontFamily: "Montserrat",
+                                fontSize: 16,
+                                color: Colors.grey
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 30),
+                      height: 120,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          _cartaoInfoPet('Idade', pet.idade.toString()),
+                          _cartaoInfoPet('Sexo', pet.sexo.toString()),
+                          _cartaoInfoPet('Cor', pet.cor.toString()),
+                          _cartaoInfoPet('ID', pet.id.toString()),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
+                      child: Text(
+                        pet.bio,
+                        style: TextStyle(
+                            fontFamily: "Montserrat",
+                            fontSize: 16,
+                            height: 1.5
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                  ],
+                ),
               ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => FormPetScreen(id: pet.id.toString()),
+                    ),
+                  );
+                },
+                child: Icon(
+                    Icons.edit
+                ),
+                backgroundColor: Colors.redAccent,
+              ),
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+              bottomNavigationBar: CustomNavbar(paginaAberta: 0, pet: pet,),
             );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
           }
-        }
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => FormPetScreen(id: pet.id.toString()),
-            ),
-          );
-        },
-        child: Icon(
-          Icons.edit
-        ),
-        backgroundColor: Colors.redAccent,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: CustomNavbar(paginaAberta: 0, pet: pet,),
-    );
+        );
   }
 
   Widget _cartaoInfoPet(String label, String informacao) {
