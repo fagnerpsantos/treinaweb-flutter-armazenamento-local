@@ -12,8 +12,8 @@ class PerfilPetScreen extends StatefulWidget {
   @override
   _PerfilPetScreenState createState() => _PerfilPetScreenState();
 }
-class _PerfilPetScreenState extends State<PerfilPetScreen> {
 
+class _PerfilPetScreenState extends State<PerfilPetScreen> {
   PetService service = PetService();
   Pet pet;
 
@@ -26,12 +26,11 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: _loadPet,
-        builder: (BuildContext context, AsyncSnapshot snapshot){
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             pet = snapshot.data;
             return Scaffold(
@@ -48,11 +47,8 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
                             height: 350,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage(
-                                        pet.imageUrl
-                                    ),
-                                    fit: BoxFit.cover
-                                )
+                                    image: AssetImage(pet.imageUrl),
+                                    fit: BoxFit.cover)
                             ),
                           ),
                         ),
@@ -68,7 +64,9 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
                         )
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 40),
                       child: Row(
@@ -79,8 +77,7 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
                             style: TextStyle(
                                 fontFamily: "Montserrat",
                                 fontSize: 24,
-                                fontWeight: FontWeight.bold
-                            ),
+                                fontWeight: FontWeight.bold),
                           )
                         ],
                       ),
@@ -95,8 +92,7 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
                             style: TextStyle(
                                 fontFamily: "Montserrat",
                                 fontSize: 16,
-                                color: Colors.grey
-                            ),
+                                color: Colors.grey),
                           )
                         ],
                       ),
@@ -115,14 +111,14 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 25),
                       child: Text(
                         pet.bio,
                         style: TextStyle(
                             fontFamily: "Montserrat",
                             fontSize: 16,
-                            height: 1.5
-                        ),
+                            height: 1.5),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -134,25 +130,26 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => FormPetScreen(id: pet.id.toString()),
+                      builder: (_) => FormPetScreen(id: pet.id),
                     ),
                   );
                 },
-                child: Icon(
-                    Icons.edit
-                ),
+                child: Icon(Icons.edit),
                 backgroundColor: Colors.redAccent,
               ),
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-              bottomNavigationBar: CustomNavbar(paginaAberta: 0, pet: pet,),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
+              bottomNavigationBar: CustomNavbar(
+                paginaAberta: 0,
+                pet: pet,
+              ),
             );
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
-        );
+        });
   }
 
   Widget _cartaoInfoPet(String label, String informacao) {
@@ -160,9 +157,7 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
       margin: EdgeInsets.all(10),
       width: 100,
       decoration: BoxDecoration(
-          color: Color(0xFFF8F2F7),
-          borderRadius: BorderRadius.circular(20)
-      ),
+          color: Color(0xFFF8F2F7), borderRadius: BorderRadius.circular(20)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -172,18 +167,18 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
                 fontFamily: "Montserrat",
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.red
-            ),
+                color: Colors.red),
           ),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           Text(
             informacao,
             style: TextStyle(
                 fontFamily: "Montserrat",
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.black
-            ),
+                color: Colors.black),
           ),
         ],
       ),
@@ -191,6 +186,6 @@ class _PerfilPetScreenState extends State<PerfilPetScreen> {
   }
 
   Future<Pet> _getPet(int id) async {
-     return await service.getPet(id);
+    return await service.getPet(id);
   }
 }

@@ -18,14 +18,14 @@ class DbUtil {
         bio TEXT)"""
     );
     db.execute("""CREATE TABLE remedios (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(50),
-        data DATE, pet INTEGER,
+        data DATETIME, pet INTEGER,
         FOREIGN KEY (pet) REFERENCES pets (id) ON DELETE NO ACTION ON UPDATE NO ACTION)"""
     );
   }
   static Future<void> inserir(String table, Map<String, Object> dados) async{
       final db = await DbUtil.database();
-      print(await db.insert(table, dados,
-          conflictAlgorithm: sql.ConflictAlgorithm.replace));
+      await db.insert(table, dados,
+          conflictAlgorithm: sql.ConflictAlgorithm.replace);
   }
 
   static Future<List<Map<String, dynamic>>> getData(String table) async {
@@ -33,9 +33,29 @@ class DbUtil {
     return db.query(table);
   }
 
-  static Future<List<Map<String, dynamic>>> getDataId(String table, List<String> columnsToSelect, String whereString, List<dynamic> whereArguments) async {
+  static Future<List<Map<String, dynamic>>> getDataId(String table, List<String>
+  columnsToSelect, String whereString, List<dynamic> whereArguments) async {
     final db = await DbUtil.database();
     return db.query(table, columns: columnsToSelect,
+        where: whereString,
+        whereArgs: whereArguments);
+  }
+
+  static Future<List> getDataWhere(int id) async {
+    final db = await DbUtil.database();
+    final maps = await db.query(
+      "remedios",
+      where: 'pet = ?',
+      whereArgs: [id],
+    );
+    // print(maps);
+    return maps.toList();
+  }
+
+  static Future<void> editar(String table, Map<String, Object> dados,
+      String whereString, List<dynamic> whereArguments) async {
+    final db = await DbUtil.database();
+    await db.update(table, dados,
         where: whereString,
         whereArgs: whereArguments);
   }

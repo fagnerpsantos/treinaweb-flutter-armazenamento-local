@@ -12,28 +12,7 @@ class PetService {
     return _singleton;
   }
 
-  PetService._internal() {
-//    _petList.add(Pet(
-//        nome: "Totó",
-//        imageUrl: 'assets/images/toto.png',
-//        descricao: "Um cachorro esperto",
-//        idade: 2,
-//        sexo: "Macho",
-//        cor: "Preto",
-//        bio: "Sou um totó bem esperto",
-//        id: "1"
-//    ));
-//    _petList.add(Pet(
-//        nome: "Arnaldo",
-//        imageUrl: 'assets/images/arnaldo.png',
-//        descricao: "Um pinsher elétrico",
-//        idade: 3,
-//        sexo: "Macho",
-//        cor: "Preto",
-//        bio: "Sou um pinsher elétrico",
-//        id: "2"
-//    ));
-  }
+  PetService._internal();
 
   Future<List> getAllPets() async {
     final dataList = await DbUtil.getData('pets');
@@ -64,15 +43,24 @@ class PetService {
     print("inseriu");
   }
 
-//  void editPet(String id, Pet newPet) {
-//    Pet petEditar = getPet(id);
-//    petEditar.nome = newPet.nome;
-//    petEditar.descricao = newPet.descricao;
-//    petEditar.idade = newPet.idade;
-//    petEditar.sexo = newPet.sexo;
-//    petEditar.cor = newPet.cor;
-//    petEditar.bio = newPet.bio;
-//  }
+  void editPet(int id, Pet pet) async {
+    final newPet = Pet(
+      id: id,
+      nome: pet.nome,
+      bio: pet.bio,
+      idade: pet.idade,
+      sexo: pet.sexo,
+      descricao: pet.descricao,
+      cor: pet.cor,
+      imageUrl: 'assets/images/toto.png',
+    );
+    print(newPet.sexo);
+    String whereString = "id = ?";
+    int rowId = id;
+    List<dynamic> whereArguments = [rowId];
+    DbUtil.editar("pets", newPet.toMap(), whereString, whereArguments);
+    print("editou");
+  }
 
   Future<Pet> getPet(int id) async {
     List<String> columnsToSelect = [
@@ -85,23 +73,10 @@ class PetService {
       "cor",
       "bio",
     ];
-    String whereString = "$id = ?";
+    String whereString = "id = ?";
     int rowId = id;
     List<dynamic> whereArguments = [rowId];
     final dataList = await DbUtil.getDataId("pets", columnsToSelect, whereString, whereArguments);
     return Pet.fromMap(dataList.first);
   }
-
-//  Future<Pet> getPet(int id) async {
-//    Database dbContact = await db;
-//    List<Map> maps = await dbContact.query(contactTable,
-//        columns: [idColumn, nameColumn, emailColumn, phoneColumn, imgColumn],
-//        where: "$idColumn = ?",
-//        whereArgs: [id]);
-//    if(maps.length > 0){
-//      return Contact.fromMap(maps.first);
-//    } else {
-//      return null;
-//    }
-//  }
 }

@@ -17,7 +17,7 @@ class RemedioService{
     _remedioList.add(Remedio(
       nome: "Remédio X",
       data: "10/10/2020",
-      id: "123",
+      id: 123,
 //      pet: petService.getPet("1").id
     ));
   }
@@ -28,26 +28,36 @@ class RemedioService{
     }).toList();
   }
 
+  Future<List> getRemedioPet(int id) async {
+    final dataList = await DbUtil.getDataWhere(id);
+    return dataList.map((remedios) => Remedio(
+      id: remedios['id'],
+      nome: remedios['nome'],
+      data: remedios['data'],
+      pet: remedios['pet']
+    )).toList();
+  }
+
   Future<List> getAllRemedios() async {
     final dataList = await DbUtil.getData('remedios');
 //    print(dataList);
     _remedioList = dataList.map((remedios) => Remedio(
-        id: remedios['id'].toString(),
+        id: remedios['id'],
         nome: remedios['nome'],
         data: remedios['data'],
         pet: remedios['pet'],
     )).toList();
-    print(_remedioList[0].toMap());
+    print(_remedioList[0].data);
     return _remedioList;
   }
 
-  void addRemedio(Remedio remedio) {
+  void addRemedio(Remedio remedio) async {
     final newRemedio = Remedio(
       nome: remedio.nome,
       data: remedio.data,
       pet: remedio.pet
     );
+    print(remedio.pet);
     DbUtil.inserir('remedios', newRemedio.toMap());
-
   }
 }

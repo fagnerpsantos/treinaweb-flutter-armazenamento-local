@@ -20,9 +20,9 @@ Widget remedioCard(BuildContext context, int index, List remedioList) {
           remedioList[index].nome,
           style: TextStyle(fontWeight: FontWeight.w400),
         ),
-        subtitle: Text(
-          remedioList[index].data,
-        ),
+        // subtitle: Text(
+        //   remedioList[index].data,
+        // ),
       ),
     ),
   );

@@ -1,10 +1,10 @@
 import 'package:lifepet_app/models/pet_model.dart';
 
 class Remedio {
-  final String nome;
-  final String data;
-  final String id;
-  final int pet;
+  String nome;
+  String data;
+  int id;
+  int pet;
 
   Remedio({
     this.nome,
@@ -19,5 +19,12 @@ class Remedio {
       'nome': nome,
       'pet': pet
     };
+  }
+
+  Remedio.fromMap(Map map){
+    id = map["id"];
+    nome = map["nome"];
+    data = map["data"];
+    pet = map["pet"];
   }
 }
