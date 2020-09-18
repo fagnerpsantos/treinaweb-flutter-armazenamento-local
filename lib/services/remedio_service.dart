@@ -29,7 +29,10 @@ class RemedioService{
   }
 
   Future<List> getRemedioPet(int id) async {
-    final dataList = await DbUtil.getDataWhere(id);
+    String whereString = "pet = ?";
+    int rowId = id;
+    List<dynamic> whereArguments = [rowId];
+    final dataList = await DbUtil.getDataWhere("remedios", whereString, whereArguments);
     return dataList.map((remedios) => Remedio(
       id: remedios['id'],
       nome: remedios['nome'],

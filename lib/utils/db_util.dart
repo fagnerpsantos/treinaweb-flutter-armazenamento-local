@@ -41,12 +41,13 @@ class DbUtil {
         whereArgs: whereArguments);
   }
 
-  static Future<List> getDataWhere(int id) async {
+  static Future<List> getDataWhere(String table, String whereString,
+      List<dynamic> whereArguments) async {
     final db = await DbUtil.database();
     final maps = await db.query(
-      "remedios",
-      where: 'pet = ?',
-      whereArgs: [id],
+      table,
+      where: whereString,
+      whereArgs: whereArguments,
     );
     // print(maps);
     return maps.toList();
