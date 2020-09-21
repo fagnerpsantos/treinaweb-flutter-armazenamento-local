@@ -6,14 +6,6 @@ import 'package:lifepet_app/utils/db_util.dart';
 class PetService {
   List<Pet> _petList = [];
 
-  static final PetService _singleton = PetService._internal();
-
-  factory PetService() {
-    return _singleton;
-  }
-
-  PetService._internal();
-
   Future<List> getAllPets() async {
     final dataList = await DbUtil.getData('pets');
     _petList = dataList.map((pets) => Pet(

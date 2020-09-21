@@ -7,14 +7,6 @@ class RemedioService{
   List<Remedio> _remedioList = [];
   final PetService petService = PetService();
 
-  static final RemedioService _singleton = RemedioService._internal();
-
-  factory RemedioService() {
-    return _singleton;
-  }
-
-  RemedioService._internal();
-
   Future<List> getRemedioPet(int id) async {
     String whereString = "pet = ?";
     int rowId = id;
