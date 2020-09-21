@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lifepet_app/models/pet_model.dart';
+import 'package:lifepet_app/screens/pet/form_edit_pet_screen.dart';
 import 'package:lifepet_app/screens/pet/form_pet_screen.dart';
 import 'package:lifepet_app/screens/pet/perfil/perfil_pet_screen.dart';
 import 'package:lifepet_app/services/pet_service.dart';

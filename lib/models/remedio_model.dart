@@ -17,7 +17,8 @@ class Remedio {
     return {
       'id': id,
       'nome': nome,
-      'pet': pet
+      'pet': pet,
+      'data': data
     };
   }
 

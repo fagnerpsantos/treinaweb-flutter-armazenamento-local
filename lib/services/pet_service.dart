@@ -40,7 +40,6 @@ class PetService {
       imageUrl: 'assets/images/toto.png',
     );
     DbUtil.inserir('pets', newPet.toMap());
-    print("inseriu");
   }
 
   void editPet(int id, Pet pet) async {

@@ -3,33 +3,51 @@ import 'package:lifepet_app/models/pet_model.dart';
 import 'package:lifepet_app/screens/home/home_screen.dart';
 import 'package:lifepet_app/services/pet_service.dart';
 
-class FormPetScreen extends StatefulWidget {
+class FormEditPetScreen extends StatefulWidget {
+  int id;
+
+  FormEditPetScreen({this.id});
 
   @override
-  _FormPetScreenState createState() => _FormPetScreenState();
+  _FormEditPetScreenState createState() => _FormEditPetScreenState();
 }
 
-class _FormPetScreenState extends State<FormPetScreen> {
+class _FormEditPetScreenState extends State<FormEditPetScreen> {
   final PetService petService = PetService();
   Pet pet;
-  String _corPet = 'Branco';
-  String _sexoPet = 'Macho';
+  String _corPet;
+  String _sexoPet;
   final _nomeController = TextEditingController();
   final _bioController = TextEditingController();
   final _idadeController = TextEditingController();
   final _descricaoController = TextEditingController();
   PetService service = PetService();
+  Future<Pet> _loadPet;
 
   @override
   void initState() {
     super.initState();
+    if (widget.id != null) {
+      _loadPet = _getPet(widget.id);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return FutureBuilder(
+        future: _loadPet,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            pet = snapshot.data;
+            _nomeController.text = pet.nome;
+            _bioController.text = pet.bio;
+            _idadeController.text = pet.idade.toString();
+            _sexoPet = pet.sexo;
+            _descricaoController.text = pet.descricao;
+            _corPet = pet.cor;
+            return Scaffold(
               appBar: AppBar(
-                title: Text("Cadastro do pet"),
+                title: Text("Edição do Pet"),
               ),
               body: SingleChildScrollView(
                 child: Padding(
@@ -102,7 +120,8 @@ class _FormPetScreenState extends State<FormPetScreen> {
                                     sexo: _sexoPet,
                                     descricao: _descricaoController.text,
                                     cor: _corPet);
-                                    service.addPet(newPet);
+                                    service.editPet(pet.id, newPet);
+
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) => HomeScreen(),
@@ -111,7 +130,7 @@ class _FormPetScreenState extends State<FormPetScreen> {
                               },
                               color: Colors.redAccent,
                               child: Text(
-                                "Cadastrar",
+                                "Salvar",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
@@ -124,6 +143,15 @@ class _FormPetScreenState extends State<FormPetScreen> {
                 ),
               ),
             );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
+        });
   }
 
+  Future<Pet> _getPet(int id) async {
+    return await petService.getPet(id);
+  }
+}
