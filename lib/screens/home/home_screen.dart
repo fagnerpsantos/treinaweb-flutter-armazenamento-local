@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lifepet_app/models/pet_model.dart';
-import 'package:lifepet_app/screens/pet/form_edit_pet_screen.dart';
 import 'package:lifepet_app/screens/pet/form_pet_screen.dart';
-import 'package:lifepet_app/screens/pet/perfil/perfil_pet_screen.dart';
 import 'package:lifepet_app/services/pet_service.dart';
+
+import 'components/pet_card.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,102 +12,54 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PetService service = PetService();
+  Future<List> _loadPets;
   List<Pet> pets = List();
 
   @override
   void initState() {
     // TODO: implement initState
+    _loadPets = _getPets();
     super.initState();
-    _getAllPets();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: ListView.builder(
-        itemCount: pets.length,
-        itemBuilder: (context, index) {
-          return _petCard(context, index);
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => FormPetScreen(),
-            ),
-          );
-        },
-        label: Text("Cadastrar"),
-        icon: Icon(Icons.pets),
-        backgroundColor: Colors.redAccent,
-      ),
-    );
-  }
-
-  Widget _petCard(BuildContext context, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => PerfilPetScreen(
-              id: pets[index].id,
-            ),
-          ),
-        );
-      },
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Hero(
-              tag: pets[index].id,
-              child: Container(
-                width: double.infinity,
-                height: 250,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    image: DecorationImage(
-                        image: AssetImage(pets[index].imageUrl),
-                        fit: BoxFit.cover)),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(12, 12, 40, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    pets[index].nome,
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(12, 12, 40, 0),
-              child: Text(
-                pets[index].descricao,
-                style: TextStyle(
-                    fontFamily: 'Montserrat', fontSize: 16, color: Colors.grey),
-              ),
-            )
-          ],
+    return FutureBuilder(
+      future: _loadPets,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      if (snapshot.hasData) {
+        pets = snapshot.data;
+        return Scaffold(
+        backgroundColor: Colors.white,
+        body: ListView.builder(
+          itemCount: pets.length,
+          itemBuilder: (context, index) {
+            return petCard(context, index, pets[index]);
+          },
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => FormPetScreen(),
+              ),
+                  );
+                },
+          label: Text("Cadastrar"),
+          icon: Icon(Icons.pets),
+          backgroundColor: Colors.redAccent,
+        ),
+        );
+      } else {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+        });
   }
 
-  void _getAllPets() {
-    service.getAllPets().then((list) {
-      setState(() {
-        pets = list;
-      });
-    });
+
+  Future<List> _getPets() async {
+    return await service.getAllPets();
   }
 }

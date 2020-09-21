@@ -13,20 +13,7 @@ class RemedioService{
     return _singleton;
   }
 
-  RemedioService._internal(){
-    _remedioList.add(Remedio(
-      nome: "Remédio X",
-      data: "10/10/2020",
-      id: 123,
-//      pet: petService.getPet("1").id
-    ));
-  }
-
-  List getRemediosPet(String id) {
-    return _remedioList.where((remedio) {
-      return remedio.pet == id;
-    }).toList();
-  }
+  RemedioService._internal();
 
   Future<List> getRemedioPet(int id) async {
     String whereString = "pet = ?";
@@ -43,14 +30,12 @@ class RemedioService{
 
   Future<List> getAllRemedios() async {
     final dataList = await DbUtil.getData('remedios');
-//    print(dataList);
     _remedioList = dataList.map((remedios) => Remedio(
         id: remedios['id'],
         nome: remedios['nome'],
         data: remedios['data'],
         pet: remedios['pet'],
     )).toList();
-    print(_remedioList[0].data);
     return _remedioList;
   }
 
@@ -60,7 +45,6 @@ class RemedioService{
       data: remedio.data,
       pet: remedio.pet
     );
-    print(remedio.pet);
     DbUtil.inserir('remedios', newRemedio.toMap());
   }
 }
