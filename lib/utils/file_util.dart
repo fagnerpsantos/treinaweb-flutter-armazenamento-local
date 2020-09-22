@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:lifepet_app/models/usuario_model.dart';
@@ -13,20 +11,18 @@ class FileUtil {
   }
 
   static Future<File> inserir(Usuario usuario) async {
-    String data = json.encode(usuario.toMap());
+    String dataUser = json.encode(usuario.toUserMap());
 
     final file = await getFile();
-    return file.writeAsString(data + '\n',
+    return file.writeAsString(dataUser + '\n',
         mode: FileMode.append);
   }
 
-  static Future<String> readData() async {
-    try {
-      final file = await getFile();
-
-      return file.readAsString();
-    } catch (e) {
-      return null;
-    }
+  static Future<List<String>> getUsuarios() async {
+    final file = await getFile();
+    print("arquivo");
+    print(file.readAsString().then((value) =>
+        print(value)
+    ));
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:lifepet_app/models/pet_model.dart';
 import 'package:lifepet_app/utils/db_util.dart';
 

@@ -14,6 +14,7 @@ class FormUsuarioScreen extends StatefulWidget {
 class _FormUsuarioScreenState extends State<FormUsuarioScreen> {
   final UsuarioService _usuarioService = UsuarioService();
   final _emailController = TextEditingController();
+  final _nomeController = TextEditingController();
   final _senhaController = TextEditingController();
 
   @override
@@ -35,6 +36,11 @@ class _FormUsuarioScreenState extends State<FormUsuarioScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 TextFormField(
+                  controller: _nomeController,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(labelText: "Nome"),
+                ),
+                TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(labelText: "Email"),
@@ -53,9 +59,11 @@ class _FormUsuarioScreenState extends State<FormUsuarioScreen> {
                     child: RaisedButton(
                       onPressed: () {
                         Usuario newUsuario = Usuario(
+                            nome: _nomeController.text,
                             email: _emailController.text,
                             senha: _senhaController.text);
                         _usuarioService.addUsuario(newUsuario);
+                        _usuarioService.getUsuarios();
                         // Navigator.of(context).push(
                         //   MaterialPageRoute(
                         //     builder: (_) => HomeScreen(),

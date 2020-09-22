@@ -1,16 +1,25 @@
 class Usuario {
+  String nome;
   String email;
   String senha;
   int id;
 
   Usuario({
+    this.nome,
     this.email,
     this.senha,
     this.id
   });
 
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toUserMap() {
+    return {
+      'id': id,
+      'nome': nome,
+    };
+  }
+
+  Map<String, dynamic> toSecureMap() {
     return {
       'id': id,
       'email': email,
@@ -18,10 +27,10 @@ class Usuario {
     };
   }
 
-  Usuario.fromMap(Map map){
-    id = map["id"];
-    email = map["email"];
-    senha = map["senha"];
-  }
+  Usuario.fromJson(Map<String, dynamic> json)
+      : id = json['id'] as int,
+        email = json['email'] as String,
+        nome = json['nome'] as String,
+        senha = json['senha'] as String;
 
 }
