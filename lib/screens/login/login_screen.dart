@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lifepet_app/screens/cadastro_usuario/form_usuario_screen.dart';
 import 'package:lifepet_app/screens/home/home_screen.dart';
 import 'package:lifepet_app/screens/login/components/botao_animado.dart';
 
@@ -129,13 +130,29 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                   hintText: 'Senha'
                               ),
                             ),
+                          ),
+                          Divider(),
+                          Container(
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => FormUsuarioScreen(),
+                                  ),
+                                );
+                              },
+                              child: Align(
+                                alignment: Alignment.center,
+                                  child: Text("Cadastre-se")
+                              ),
+                            ),
                           )
                         ],
                       ),
                     )
                   ],
                 ),
-                BotaoAnimado(controller: _animationController,)
+                BotaoAnimado(controller: _animationController,),
               ],
             )
           ],
