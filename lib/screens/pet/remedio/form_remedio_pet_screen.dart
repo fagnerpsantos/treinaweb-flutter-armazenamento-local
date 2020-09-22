@@ -117,7 +117,7 @@ class _FormRemedioPetScreenState extends State<FormRemedioPetScreen> {
     return await petService.getPet(id);
   }
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
