@@ -23,6 +23,8 @@ class _FormRemedioPetScreenState extends State<FormRemedioPetScreen> {
 
   final RemedioService remedioService = RemedioService();
 
+  DateTime selectedDate = DateTime.now();
+
   Pet pet;
 
   Future<Pet> _loadPet;
@@ -59,11 +61,17 @@ class _FormRemedioPetScreenState extends State<FormRemedioPetScreen> {
                           decoration:
                               InputDecoration(labelText: "Nome do remédio"),
                         ),
-                        TextFormField(
-                          controller: _dataController,
-                          keyboardType: TextInputType.datetime,
-                          decoration:
-                              InputDecoration(labelText: "Data do remédio"),
+                        GestureDetector(
+                          onTap: () => _selectDate(context),
+                          child: AbsorbPointer(
+                          child: TextFormField(
+                            controller: _dataController,
+                            keyboardType: TextInputType.datetime,
+                            decoration:
+                                InputDecoration(
+                                    labelText: selectedDate.toString()),
+                          ),
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 20, bottom: 20),
@@ -73,7 +81,7 @@ class _FormRemedioPetScreenState extends State<FormRemedioPetScreen> {
                               onPressed: () {
                                 Remedio novoRemedio = Remedio(
                                     nome: _nomeController.text,
-                                    data: _dataController.text,
+                                    data: selectedDate.toString(),
                                     pet: pet.id);
                                 remedioService.addRemedio(novoRemedio);
                                 Navigator.of(context).pushReplacement(
@@ -107,5 +115,17 @@ class _FormRemedioPetScreenState extends State<FormRemedioPetScreen> {
 
   Future<Pet> _getPet(int id) async {
     return await petService.getPet(id);
+  }
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
   }
 }
