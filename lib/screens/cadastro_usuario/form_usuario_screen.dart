@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lifepet_app/models/pet_model.dart';
 import 'package:lifepet_app/models/usuario_model.dart';
 import 'package:lifepet_app/screens/home/home_screen.dart';
+import 'package:lifepet_app/screens/login/login_screen.dart';
 import 'package:lifepet_app/services/pet_service.dart';
 import 'package:lifepet_app/services/usuario_service.dart';
 
@@ -63,12 +64,11 @@ class _FormUsuarioScreenState extends State<FormUsuarioScreen> {
                             email: _emailController.text,
                             senha: _senhaController.text);
                         _usuarioService.addUsuario(newUsuario);
-                        _usuarioService.getUsuarios();
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (_) => HomeScreen(),
-                        //   ),
-                        // );
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => LoginScreen(),
+                          ),
+                        );
                       },
                       color: Colors.redAccent,
                       child: Text(

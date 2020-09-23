@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lifepet_app/models/usuario_model.dart';
 
@@ -9,15 +7,29 @@ class SecureStorageUtil {
 
 
   Future<void> inserir(Usuario usuario) async {
-    String data = json.encode(usuario.toSecureMap());
-    storage.write(key: usuario.id.toString(),
-        value: data);
-    // print("secure");
-    // print(await storage.read(key: usuario.id.toString()));
-
+    storage.write(key: usuario.email,
+        value: usuario.senha);
   }
 
-  Future<void> getUsuarios() async {
-    print(await storage.readAll());
+  Future<Map<String, dynamic>> getUsuarios() async {
+    print(storage.read(key: "asda22s@mail.com").then((value) {
+      print(value);
+    }));
+  }
+
+  // Future<Map<String, dynamic>> getUsuario(String email) async {
+  //   storage.read(key: email).then((value) {
+  //     print(value);
+  //   }));
+  // }
+
+  Future<bool> login(String email, String senha) async {
+    await storage.read(key: email).then((value) {
+      if (value == senha) {
+        print("ae");
+      } else {
+        print("nae");
+      }
+    });
   }
 }

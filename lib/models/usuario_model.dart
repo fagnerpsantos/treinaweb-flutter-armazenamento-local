@@ -12,18 +12,11 @@ class Usuario {
   });
 
 
-  Map<String, dynamic> toUserMap() {
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'nome': nome,
-    };
-  }
-
-  Map<String, dynamic> toSecureMap() {
-    return {
-      'id': id,
-      'email': email,
-      'senha': senha,
+      'email': email
     };
   }
 

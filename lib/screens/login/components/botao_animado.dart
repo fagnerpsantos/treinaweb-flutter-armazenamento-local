@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lifepet_app/services/usuario_service.dart';
 
 class BotaoAnimado extends StatelessWidget {
 
   final AnimationController controller;
+  final UsuarioService _usuarioService = UsuarioService();
+
 
   BotaoAnimado({this.controller}) :
       diminuirBotao = Tween(
@@ -28,7 +31,8 @@ class BotaoAnimado extends StatelessWidget {
   Widget _construirAnimacao(BuildContext context, Widget child) {
     return InkWell(
       onTap: () {
-        controller.forward();
+        _usuarioService.loginUsuario("asda22s@mail.com", "asdad");
+        // controller.forward();
       },
       child: crescerBotao.value <= 45 ?
       Container(

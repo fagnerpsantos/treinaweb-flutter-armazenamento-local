@@ -133,6 +133,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                           ),
                           Divider(),
                           Container(
+                            padding: EdgeInsets.only(top: 4, left: 16, right: 50, bottom: 4),
                             child: InkWell(
                               onTap: () {
                                 Navigator.of(context).push(
@@ -142,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                 );
                               },
                               child: Align(
-                                alignment: Alignment.center,
+                                alignment: Alignment.centerRight,
                                   child: Text("Cadastre-se")
                               ),
                             ),

@@ -11,7 +11,7 @@ class FileUtil {
   }
 
   static Future<File> inserir(Usuario usuario) async {
-    String dataUser = json.encode(usuario.toUserMap());
+    String dataUser = json.encode(usuario.toMap());
 
     final file = await getFile();
     return file.writeAsString(dataUser + '\n',
@@ -20,9 +20,24 @@ class FileUtil {
 
   static Future<List<String>> getUsuarios() async {
     final file = await getFile();
-    print("arquivo");
-    print(file.readAsString().then((value) =>
+    file.readAsString().then((value) =>
         print(value)
-    ));
+    );
+  }
+
+  static Future<Usuario> getUsuario(String email) async {
+    final file = await getFile();
+    LineSplitter ls = new LineSplitter();
+    List<String> lines = await ls.convert(file.readAsStringSync());
+    for (var i = 0; i < lines.length; i++) {
+      var dados = jsonDecode(lines.toString());
+      if (dados[i]["email"] == email){
+        return Usuario(
+          id: dados[i]["id"],
+          nome: dados[i]["nome"],
+          email: dados[i]["email"],
+        );
+      }
+    }
   }
 }
